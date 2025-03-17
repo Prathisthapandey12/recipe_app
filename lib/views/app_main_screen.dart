@@ -1,17 +1,29 @@
 import 'package:flutter/material.dart';
-
+import 'package:recipe_app/views/app_home_screen.dart';
 
 
 class AppMainScreen extends StatefulWidget{
   const AppMainScreen({Key? key}) : super(key: key);
 
   @override
-  _AppMainScreenState createState() => _AppMainScreenState();
+  State<AppMainScreen> createState() => _AppMainScreenState();
 }
 
 class _AppMainScreenState extends State<AppMainScreen>{
 
   int selectedindex = 0;
+  late final List<Widget> page;
+
+  @override
+  void initState(){
+    page = [
+      AppHomeScreen(),
+      navbarpage(Icons.favorite),
+      navbarpage(Icons.restaurant_menu),
+      navbarpage(Icons.settings),
+    ];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context){
@@ -51,6 +63,17 @@ class _AppMainScreenState extends State<AppMainScreen>{
           ),
         ],
         
+      ),
+      body: page[selectedindex],
+    );
+  }
+
+  navbarpage(iconName){
+    return Center(
+      child: Icon(
+        iconName,
+        size: 100,
+        color: Colors.black,
       ),
     );
   }
