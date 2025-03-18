@@ -15,10 +15,10 @@ class BannerToExplore extends StatelessWidget {
       child: Stack(
         children : [
           Positioned(
-            top : 30,
-            left : 15,
+            top : 32,
+            left : 20,
             child : Column(children: [
-              Text('Explore new recipes', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white, height : 1.1),),
+              Text('Explore new recipes \n and cook for yourself', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white, height : 1.1),),
               SizedBox(height: 10,),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
