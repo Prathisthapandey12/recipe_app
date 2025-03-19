@@ -7,7 +7,7 @@ class BannerToExplore extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 200,
+      height: 150,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         color: const Color.fromARGB(255, 12, 96, 15),
