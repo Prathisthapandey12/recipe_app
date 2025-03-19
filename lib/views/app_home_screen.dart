@@ -28,6 +28,7 @@ class _AppHomeScreenState extends State<AppHomeScreen>{
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children : [
+              SizedBox(height: 10,),
               Padding(
                 padding : EdgeInsets.symmetric(horizontal: 20),
                 child : Column(

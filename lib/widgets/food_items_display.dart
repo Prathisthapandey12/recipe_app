@@ -24,7 +24,10 @@ class _FoodItemsDisplayState extends State<FoodItemsDisplay> {
         width : 230,
         child : Stack(
           children: [
-            Container(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+              Container(
               width: double.infinity,
               height: 160,
               decoration: BoxDecoration(
@@ -39,9 +42,28 @@ class _FoodItemsDisplayState extends State<FoodItemsDisplay> {
             Text(widget.documentSnapshot['name'], style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
             SizedBox(height: 5,),
             Row(children: [
-              Icon(Icons.flash_auto, size : 16 ,color: Colors.grey,),
+              Icon(Icons.flash_on, size : 16 ,color: Colors.grey,),
               Text("${widget.documentSnapshot['cal']} Cal", style: TextStyle(fontSize: 12, color: Colors.grey,fontWeight: FontWeight.bold),),
+              Text(" . ", style: TextStyle(color: Colors.grey,fontWeight: FontWeight.w900),),
+              Icon(Icons.access_time, size : 16 ,color: Colors.grey,),
+              Text("${widget.documentSnapshot['time']} min", style: TextStyle(fontSize: 12, color: Colors.grey,fontWeight: FontWeight.bold),),
+              
             ],)
+            ],),
+
+            // Add favorite button
+            Positioned(
+              top: 5,
+              right: 5,
+              child: CircleAvatar(
+                radius: 18,
+                backgroundColor: Colors.white,
+                child: InkWell(
+                  onTap: (){},
+                  child: Icon(Icons.favorite_border, color: Colors.black,),
+                ),
+              ),
+            )
           ],
         )
       ),
