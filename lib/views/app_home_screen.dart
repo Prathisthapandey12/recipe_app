@@ -3,6 +3,7 @@ import 'package:recipe_app/widgets/my_icon_button.dart';
 import 'package:recipe_app/widgets/banner.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:recipe_app/widgets/food_items_display.dart';
+import 'package:recipe_app/views/view_all.dart';
 
 class AppHomeScreen extends StatefulWidget{
   const AppHomeScreen({Key? key}) : super(key: key);
@@ -14,8 +15,10 @@ class AppHomeScreen extends StatefulWidget{
 class _AppHomeScreenState extends State<AppHomeScreen>{
 
   String category = 'All';
+  // fetching the categories from the firestore
   final CollectionReference categoriesItems =
     FirebaseFirestore.instance.collection('categories');
+  // fetching the recipes from the firestore
   Query get filteredRecipes => FirebaseFirestore.instance.collection('food-items').where('category', isEqualTo: category);
   Query get allRecipes => FirebaseFirestore.instance.collection('food-items');
   Query get selectedRecipes => category == 'All' ? allRecipes : filteredRecipes;
@@ -23,7 +26,7 @@ class _AppHomeScreenState extends State<AppHomeScreen>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      backgroundColor: Colors.grey[350],
+      backgroundColor: const Color.fromARGB(255, 200, 198, 198),
       body : SafeArea(child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,6 +119,8 @@ class _AppHomeScreenState extends State<AppHomeScreen>{
                   Text('Quick & Easy', style: TextStyle(fontSize: 20, letterSpacing: 0.1, fontWeight: FontWeight.bold, ),),
                   TextButton(onPressed: (){
                   // we would add this later
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ViewAll()));
+                    
                   },
                   child: Text('View all', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold,),),
                   ),
@@ -145,7 +150,6 @@ class _AppHomeScreenState extends State<AppHomeScreen>{
                 );
               }
             }
-              
           )
       ],
     ),
