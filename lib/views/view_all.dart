@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:recipe_app/widgets/food_items_display.dart';
 import 'package:recipe_app/widgets/my_icon_button.dart';
 
 class ViewAll extends StatefulWidget {
@@ -37,11 +38,12 @@ class _ViewAllState extends State<ViewAll> {
         ],
       ),
       body : SingleChildScrollView(
-        padding: EdgeInsets.only(left: 10, right: 10, top: 10),
+        padding: EdgeInsets.only(left: 15, right: 5, top: 10),
         child : Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children : [
+            SizedBox(height: 10,),
             StreamBuilder(
               stream: foodItems.snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot){
@@ -49,15 +51,28 @@ class _ViewAllState extends State<ViewAll> {
                   return GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
+                      childAspectRatio: 0.7,
                       ),
                     itemBuilder: (context, index){
-                      return Container(
-                      color: Colors.yellow,
+
+                      final DocumentSnapshot document = snapshot.data!.docs[index];
+                      return Column(
+                        children: [
+                          FoodItemsDisplay(documentSnapshot: document),
+                          Row(
+                            children: [
+                              Icon(Icons.star, size : 16 ,color: Colors.amberAccent,),
+                              SizedBox(width: 5,),
+                              Text("${document['rating']}", style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
+                              Text("/5 ", style: TextStyle(fontSize: 12),),
+                              Text("${document['reviews'].toString()} reviews", style: TextStyle(fontSize: 12, color: Colors.grey,fontWeight: FontWeight.bold),),
+                            ],
+                          )
+
+                        ],
                       );
                       
-                    }, itemCount: 10, shrinkWrap: true, physics: NeverScrollableScrollPhysics(), );
+                    }, itemCount: snapshot.data!.docs.length, shrinkWrap: true, physics: NeverScrollableScrollPhysics(), );
                 }
                 else{
                   return Center(child: CircularProgressIndicator());

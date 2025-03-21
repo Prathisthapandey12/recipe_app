@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:recipe_app/Provider/favorite_provider.dart';
 
 class FoodItemsDisplay extends StatefulWidget {
 
@@ -15,6 +16,8 @@ class _FoodItemsDisplayState extends State<FoodItemsDisplay> {
 
   @override
   Widget build(BuildContext context) {
+
+    final provider = FavoriteProvider.of(context);
     return GestureDetector(
       onTap: (){
 
@@ -59,8 +62,14 @@ class _FoodItemsDisplayState extends State<FoodItemsDisplay> {
                 radius: 18,
                 backgroundColor: Colors.white,
                 child: InkWell(
-                  onTap: (){},
-                  child: Icon(Icons.favorite_border, color: Colors.black,),
+                  onTap: (){
+                    provider.toggleFavorite(widget.documentSnapshot);
+                  },
+                  child: Icon(
+                    provider.isExist(widget.documentSnapshot) ? Icons.favorite : Icons.favorite_border ,
+                    color: provider.isExist(widget.documentSnapshot) ? Colors.red : Colors.black,
+                    size: 20,
+                  ),
                 ),
               ),
             )

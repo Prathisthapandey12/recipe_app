@@ -44,10 +44,11 @@ class _AppHomeScreenState extends State<AppHomeScreen>{
 
                     ],),
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 22),
+                      padding: EdgeInsets.symmetric(vertical: 15),
                       child: TextField(
+                        style: TextStyle(fontSize: 14),
                         decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.search),
+                          prefixIcon: Icon(Icons.search, size: 20,),
                           filled: true,
                           fillColor: Colors.white,
                           border: InputBorder.none,

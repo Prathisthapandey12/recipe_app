@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/views/app_home_screen.dart';
-
+import 'package:recipe_app/views/app_favorite_screen.dart';
 
 class AppMainScreen extends StatefulWidget{
   const AppMainScreen({Key? key}) : super(key: key);
@@ -18,7 +18,7 @@ class _AppMainScreenState extends State<AppMainScreen>{
   void initState(){
     page = [
       AppHomeScreen(),
-      navbarpage(Icons.favorite),
+      AppFavoriteScreen(),
       navbarpage(Icons.restaurant_menu),
       navbarpage(Icons.settings),
     ];
