@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_app/Provider/favorite_provider.dart';
+import 'package:recipe_app/views/app_recipe_screen.dart';
 
 class FoodItemsDisplay extends StatefulWidget {
 
@@ -20,7 +21,7 @@ class _FoodItemsDisplayState extends State<FoodItemsDisplay> {
     final provider = FavoriteProvider.of(context);
     return GestureDetector(
       onTap: (){
-
+        Navigator.push(context, MaterialPageRoute(builder: (context) => AppRecipeScreen(documentSnapshot: widget.documentSnapshot)));
       },
       child: Container(
         margin: EdgeInsets.only(right: 10),
@@ -42,7 +43,7 @@ class _FoodItemsDisplayState extends State<FoodItemsDisplay> {
               ),
             ),
             SizedBox(height: 10,),
-            Text(widget.documentSnapshot['name'], style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+            Text(widget.documentSnapshot['name'], style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),),
             SizedBox(height: 5,),
             Row(children: [
               Icon(Icons.flash_on, size : 16 ,color: Colors.grey,),

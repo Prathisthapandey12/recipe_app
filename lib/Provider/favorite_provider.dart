@@ -15,10 +15,10 @@ class FavoriteProvider extends ChangeNotifier{
   void toggleFavorite(DocumentSnapshot product) async{
     String productId = product.id;
     if(_favoriteIds.contains(productId)){
-      _favoriteIds.remove(productId);
+      _favoriteIds.remove(productId); // remove from the list
       await _removefavorite(productId); // remove from favorite
     }else{
-      _favoriteIds.add(productId);
+      _favoriteIds.add(productId); // add to the list
       await _addfavorite(productId); // add to favorite
     }
     notifyListeners();

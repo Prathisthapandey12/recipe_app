@@ -26,7 +26,6 @@ class _AppHomeScreenState extends State<AppHomeScreen>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 200, 198, 198),
       body : SafeArea(child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,15 +37,17 @@ class _AppHomeScreenState extends State<AppHomeScreen>{
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(children: [
-                      Text('What are you \n cooking today?', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold,height: 1,),),
+                      Text('What are you \n cooking today?', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,height: 1,),),
                       const Spacer(),
                       MyIconButton(icon: Icons.notifications, pressed: (){},),
 
                     ],),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 15),
-                      child: TextField(
-                        style: TextStyle(fontSize: 14),
+                      child: Container(
+                        height : 40,
+                        child : TextField(
+                        style: TextStyle(fontSize: 12),
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.search, size: 20,),
                           filled: true,
@@ -64,12 +65,13 @@ class _AppHomeScreenState extends State<AppHomeScreen>{
                           ),
                         ),
                       ),
+                      )
                     ),
                     BannerToExplore(),
 
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 20,),
-                      child: Text('Categories', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,),),
+                      child: Text('Categories', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,),),
                     ),
 
                     StreamBuilder(
@@ -98,7 +100,7 @@ class _AppHomeScreenState extends State<AppHomeScreen>{
                               streamSnapshot.data!.docs[index]['name'],
                               style: TextStyle(
                                 color: category == streamSnapshot.data!.docs[index]['name'] ? Colors.white :  const Color.fromARGB(255, 107, 104, 104) ,
-                                fontSize: 18, fontWeight: FontWeight.w600,
+                                fontSize: 14, fontWeight: FontWeight.w600,
                               ),
                             ),
                           )
@@ -117,7 +119,7 @@ class _AppHomeScreenState extends State<AppHomeScreen>{
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Quick & Easy', style: TextStyle(fontSize: 20, letterSpacing: 0.1, fontWeight: FontWeight.bold, ),),
+                  Text('Quick & Easy', style: TextStyle(fontSize: 14, letterSpacing: 0.1, fontWeight: FontWeight.bold, ),),
                   TextButton(onPressed: (){
                   // we would add this later
                     Navigator.push(context, MaterialPageRoute(builder: (context) => ViewAll()));
