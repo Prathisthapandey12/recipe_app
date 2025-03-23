@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/views/app_home_screen.dart';
 import 'package:recipe_app/views/app_favorite_screen.dart';
+import 'package:recipe_app/views/view_all.dart';
 
 class AppMainScreen extends StatefulWidget{
   const AppMainScreen({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class _AppMainScreenState extends State<AppMainScreen>{
     page = [
       AppHomeScreen(),
       AppFavoriteScreen(),
-      navbarpage(Icons.restaurant_menu),
+      ViewAll(),
       navbarpage(Icons.settings),
     ];
     super.initState();
@@ -55,7 +56,7 @@ class _AppMainScreenState extends State<AppMainScreen>{
           ),
           BottomNavigationBarItem(
             icon: Icon(selectedindex==2 ? Icons.restaurant_menu : Icons.restaurant_menu_outlined),
-            label: 'Meal Plan'
+            label: 'All Recipes'
           ),
           BottomNavigationBarItem(
             icon: Icon(selectedindex==3 ? Icons.settings : Icons.settings_outlined),

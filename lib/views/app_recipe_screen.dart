@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:recipe_app/Provider/quantity.dart';
 import 'package:recipe_app/widgets/my_icon_button.dart';
 import 'package:recipe_app/widgets/quantity_increment_decrement.dart';
+import 'package:recipe_app/views/app_recipe_direction.dart';
 
 class AppRecipeScreen extends StatefulWidget {
 
@@ -16,6 +17,13 @@ class AppRecipeScreen extends StatefulWidget {
 }
 
 class _AppRecipeScreenState extends State<AppRecipeScreen> {
+
+  @override
+  void initState(){
+    List<double> baseAmounts = widget.documentSnapshot['ingredientsAmount'].map<double>((amount) => double.parse(amount.toString())).toList();
+    Provider.of<QuantityProvider>(context,listen:false).setBaseIngredientsAmounts(baseAmounts);
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -32,6 +40,7 @@ class _AppRecipeScreenState extends State<AppRecipeScreen> {
         label: Row(children: [
           ElevatedButton(
             onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => AppRecipeDirection(documentSnapshot: widget.documentSnapshot)));
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.blue,
@@ -149,8 +158,51 @@ class _AppRecipeScreenState extends State<AppRecipeScreen> {
                     currentNumber: quantityProvider.currentNumber,
                     onAdd:() => quantityProvider.increaseQuantity(),
                     onRemove:() => quantityProvider.decreaseQuantity()
-                  ),
-                ],)
+                  )
+                ],),
+                SizedBox(height: 10,),
+                Column(
+                    children: [
+                      Row (
+                        children : [
+                          Column(
+                            children: widget.documentSnapshot['ingredientsimage'].map<Widget>(
+                            (imageurl) => Container(
+                              height : 60,
+                              width : 60,
+                              margin : EdgeInsets.only(bottom : 10),
+                              decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              image : DecorationImage(
+                              fit : BoxFit.cover,
+                              image: NetworkImage(imageurl)
+                            ),
+                            ),
+                          )).toList(),
+                          ),
+                          SizedBox(width: 20,),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: widget.documentSnapshot['ingredientsName'].map<Widget>(
+                            (ingredient) => Container(
+                              height : 60,
+                              child : Center(child: Text(ingredient, style: TextStyle(fontSize: 14,color: Colors.grey.shade400),),)
+                            )).toList(),
+                          ),
+                          Spacer(),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: quantityProvider.updateIngredientsAmounts.map<Widget>(
+                            (amount) => Container(
+                              height : 60,
+                              child : Center(child: Text("${amount}gm", style: TextStyle(fontSize: 14,color: Colors.grey.shade400),),)
+                            )).toList(),
+                          ),
+                        ],
+                      ),
+                ],),
+                SizedBox(height : 80,),
+                
               ],),
             ),
         ],)

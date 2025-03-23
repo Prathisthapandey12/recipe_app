@@ -6,7 +6,7 @@ import 'package:recipe_app/views/app_recipe_screen.dart';
 class FoodItemsDisplay extends StatefulWidget {
 
   final DocumentSnapshot<Object?> documentSnapshot;
-
+  
   const FoodItemsDisplay({super.key, required this.documentSnapshot});
 
   @override
