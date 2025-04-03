@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:recipe_app/Provider/quantity.dart';
 import 'views/app_main_screen.dart';
 import 'Provider/favorite_provider.dart';
+import 'views/login_screen.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: AppMainScreen(),
+        home: LoginScreen(),
       ),
     );
   }
