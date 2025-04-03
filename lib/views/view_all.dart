@@ -23,15 +23,8 @@ class _ViewAllState extends State<ViewAll> {
         automaticallyImplyLeading: false ,
         elevation: 0,
         actions: [
-          SizedBox(width: 10,),
-          IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: (){
-              Navigator.pop(context);
-            },
-          ),
-          Spacer(),
-          Text('Recipes Easy to Prepare', style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),),
+          SizedBox(width: 80,),
+          Text('Recipes Easy to Prepare', style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),),
           Spacer(),
           MyIconButton(icon: Icons.notifications, pressed: (){},),
           SizedBox(width: 10,),
@@ -54,7 +47,6 @@ class _ViewAllState extends State<ViewAll> {
                       childAspectRatio: 0.7,
                       ),
                     itemBuilder: (context, index){
-
                       final DocumentSnapshot document = snapshot.data!.docs[index];
                       return Column(
                         children: [

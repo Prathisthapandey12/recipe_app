@@ -114,23 +114,16 @@ class _AppHomeScreenState extends State<AppHomeScreen>{
                 },
               ),
 
-              SizedBox(height: 10,),
-              
+              SizedBox(height: 15,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('Quick & Easy', style: TextStyle(fontSize: 14, letterSpacing: 0.1, fontWeight: FontWeight.bold, ),),
-                  TextButton(onPressed: (){
-                  // we would add this later
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ViewAll()));
-                    
-                  },
-                  child: Text('View all', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold,),),
-                  ),
                 ],
               ),
         ],
         )),
+        SizedBox(height: 15,),
             StreamBuilder(
               stream: selectedRecipes.snapshots(),
               builder: (context,AsyncSnapshot<QuerySnapshot> snapshot){
