@@ -3,17 +3,20 @@ import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 import 'package:random_string/random_string.dart';
 import 'package:recipe_app/views/app_main_screen.dart';
-import 'package:recipe_app/views/signin_screen.dart';
+import 'package:recipe_app/views/login_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignInScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-
+class _LoginScreenState extends State<SignInScreen> {
+  
+  final TextEditingController _userController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _otpController = TextEditingController();
 
@@ -53,15 +56,34 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   /// Verify OTP
-  void verifyOTP() async{
-
+  void verifyOTP() async {
+    
     String otp = _otpController.text.trim();
     if (otp.isEmpty) {
       showMessage("Please enter the OTP.");
       return;
     }
-    if (_otpController.text.trim() == _generatedOTP) {
+
+    if ( _otpController.text.trim() == _generatedOTP) {
+
+    String username = _userController.text.trim();
+    String email = _emailController.text.trim();
+
+    QuerySnapshot existingUser = await FirebaseFirestore.instance
+      .collection('users')
+      .where('email', isEqualTo: email)
+      .get();
+
+    if (existingUser.docs.isNotEmpty) {
+      showMessage("User with this email already exists!");
+      return; // Stop registration
+    }
       showMessage("OTP Verified Successfully!");
+      await FirebaseFirestore.instance.collection('users').add({
+        'username': username,
+        'email': email,
+        'timestamp': Timestamp.now(), // Optional
+      });
       Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => AppMainScreen()),
@@ -96,13 +118,13 @@ class _LoginScreenState extends State<LoginScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children : [
-            Text("Don't have an account?",style: TextStyle(fontSize: 12)),
+            Text("Already have an account?",style: TextStyle(fontSize: 12)),
             TextButton(
               onPressed: () {
                 // Navigate to Signup Page
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => SignInScreen()),
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
                 );
               },
               style: TextButton.styleFrom(
@@ -110,11 +132,36 @@ class _LoginScreenState extends State<LoginScreen> {
                   minimumSize: Size(0, 0),
                   foregroundColor: const Color.fromARGB(255, 22, 52, 75), // Change text color
                   ),
-              child: Text("Signup"),
+              child: Text("Login"),
             ),
             SizedBox(width : 5),
           ]
         ),
+        Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: TextField(
+              controller: _userController,
+              decoration: InputDecoration(
+                hintText: 'Username',
+                hintStyle: TextStyle(color: Color.fromARGB(255, 173, 183, 176)),
+                prefixIcon: Icon(Icons.person ,color : Color.fromARGB(255, 173, 183, 176)),
+                border: OutlineInputBorder( // Default border
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: Colors.blue, width: 2),
+                ),
+                enabledBorder: OutlineInputBorder( // Border when not focused
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: Color.fromARGB(255, 173, 183, 176), width: 1.5),
+                ),
+                focusedBorder: OutlineInputBorder( // Border when focused
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: Color.fromARGB(255, 106, 113, 108), width: 2),
+                ),
+              ),
+              keyboardType: TextInputType.text,
+            ),
+          ),
+        SizedBox(height : 10),
         Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: TextField(
@@ -134,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide(color: Color.fromARGB(255, 106, 113, 108), width: 2),
                 ),
-                prefixIcon: Icon(Icons.email, color :  Color.fromARGB(255, 173, 183, 176)),
+                prefixIcon: Icon(Icons.email,color :  Color.fromARGB(255, 173, 183, 176)),
                 suffixIcon: TextButton(
                   onPressed: () => sendOTP(),
                   style: TextButton.styleFrom(
@@ -154,7 +201,7 @@ class _LoginScreenState extends State<LoginScreen> {
               decoration: InputDecoration(
                 hintText: 'Enter OTP',
                 hintStyle: TextStyle(color: Color.fromARGB(255, 173, 183, 176)),
-                prefixIcon: Icon(Icons.lock,color : Color.fromARGB(255, 173, 183, 176)),
+                prefixIcon: Icon(Icons.lock,color :  Color.fromARGB(255, 173, 183, 176)),
                 border: OutlineInputBorder( // Default border
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide(color: Colors.blue, width: 2),
@@ -171,12 +218,12 @@ class _LoginScreenState extends State<LoginScreen> {
               keyboardType: TextInputType.number,
             ),
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children : [
 
-          SizedBox(height : 10),
+            SizedBox(height : 20),
           Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
           child: ElevatedButton(
@@ -189,7 +236,7 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: EdgeInsets.symmetric(vertical: 12,horizontal: 12),
               ),
               child: Text(
-                'Login',
+                'Register',
                 style: TextStyle(fontSize: 18, color: Colors.white),
               ),
               ),
