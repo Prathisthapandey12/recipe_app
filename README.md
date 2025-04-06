@@ -3,7 +3,6 @@
 A modern and clean **Recipe App** built with **Flutter** and **Firebase**.  
 Users can browse delicious recipes, add their favorites, and securely log in/out using Firebase Authentication.
 
----
 
 ## Features
 
