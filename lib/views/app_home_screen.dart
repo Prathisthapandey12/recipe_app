@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/views/app_profile_screen.dart';
 import 'package:recipe_app/widgets/my_icon_button.dart';
 import 'package:recipe_app/widgets/banner.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -39,11 +40,14 @@ class _AppHomeScreenState extends State<AppHomeScreen>{
                     Row(children: [
                       Text('What are you \n cooking today?', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,height: 1,),),
                       const Spacer(),
+                      MyIconButton(icon: Icons.account_circle, pressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
+                      },),
                       MyIconButton(icon: Icons.notifications, pressed: (){},),
 
                     ],),
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 15),
+                      padding: EdgeInsets.symmetric(vertical: 22),
                       child: Container(
                         height : 40,
                         child : TextField(
@@ -123,7 +127,7 @@ class _AppHomeScreenState extends State<AppHomeScreen>{
               ),
         ],
         )),
-        SizedBox(height: 15,),
+        SizedBox(height: 20,),
             StreamBuilder(
               stream: selectedRecipes.snapshots(),
               builder: (context,AsyncSnapshot<QuerySnapshot> snapshot){

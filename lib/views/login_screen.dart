@@ -4,6 +4,9 @@ import 'package:mailer/smtp_server.dart';
 import 'package:random_string/random_string.dart';
 import 'package:recipe_app/views/app_main_screen.dart';
 import 'package:recipe_app/views/signin_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -26,7 +29,6 @@ class _LoginScreenState extends State<LoginScreen> {
       showMessage("Please enter an email.");
       return;
     }
-
     // Generate a random 6-digit OTP
     _generatedOTP = randomNumeric(6);
     print("Generated OTP: $_generatedOTP"); // Debugging
@@ -54,13 +56,30 @@ class _LoginScreenState extends State<LoginScreen> {
 
   /// Verify OTP
   void verifyOTP() async{
-
+    String email = _emailController.text.trim();
+    if (email.isEmpty) {
+      showMessage("Please enter an email.");
+      return;
+    }
     String otp = _otpController.text.trim();
     if (otp.isEmpty) {
       showMessage("Please enter the OTP.");
       return;
     }
     if (_otpController.text.trim() == _generatedOTP) {
+      
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoggedIn', true);
+      await prefs.setString('email', email);
+      final querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: email)
+        .limit(1)
+        .get();
+      if (querySnapshot.docs.isNotEmpty) {
+      final userData = querySnapshot.docs.first.data();
+      await prefs.setString('username', userData['username']);
+    }
       showMessage("OTP Verified Successfully!");
       Navigator.pushReplacement(
       context,

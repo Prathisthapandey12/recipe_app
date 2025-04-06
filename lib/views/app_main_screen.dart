@@ -31,7 +31,7 @@ class _AppMainScreenState extends State<AppMainScreen>{
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
+        backgroundColor: const Color.fromARGB(255, 12, 96, 15),
         elevation: 0,
         iconSize: 25,
         currentIndex: selectedindex,

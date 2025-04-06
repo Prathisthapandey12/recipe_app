@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:recipe_app/views/app_home_screen.dart';
+import 'package:recipe_app/views/app_main_screen.dart';
 
 class AppRecipeDirection extends StatefulWidget {
 
@@ -85,9 +85,30 @@ class _AppRecipeDirectionState extends State<AppRecipeDirection> {
           ),
 
           SizedBox(height : 20),
-          ElevatedButton(onPressed: (){
-            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => AppHomeScreen() ),(Route<dynamic> route) => false, );
-          }, child: Text('finished Cooking'))
+          ElevatedButton.icon(
+  onPressed: () {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => AppMainScreen()),
+      (Route<dynamic> route) => false,
+    );
+  },
+  icon: const Icon(Icons.check_circle),
+  label: const Text(
+    'Finished Cooking',
+    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+  ),
+  style: ElevatedButton.styleFrom(
+    backgroundColor: Colors.blue, // Button color
+    foregroundColor: Colors.white, // Text/icon color
+    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(24),
+    ),
+    elevation: 4,
+  ),
+)
+
           ],)
           )
       ),

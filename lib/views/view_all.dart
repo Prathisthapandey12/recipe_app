@@ -18,7 +18,7 @@ class _ViewAllState extends State<ViewAll> {
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 200, 198, 198),
+        backgroundColor:  const Color.fromARGB(255, 12, 96, 15),
         title: Text('All Recipes'),
         automaticallyImplyLeading: false ,
         elevation: 0,

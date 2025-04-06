@@ -5,6 +5,7 @@ import 'package:recipe_app/Provider/quantity.dart';
 import 'views/app_main_screen.dart';
 import 'Provider/favorite_provider.dart';
 import 'views/login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,6 +16,10 @@ void main() async{
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  Future<bool> checkLoginStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isLoggedIn') ?? false;
+  }
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -23,9 +28,20 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => FavoriteProvider()),
         ChangeNotifierProvider(create: (_) => QuantityProvider()),
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: LoginScreen(),
+        home: FutureBuilder<bool>(
+        future: checkLoginStatus(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasData && snapshot.data == true) {
+            return const AppMainScreen();
+          } else {
+            return const LoginScreen();
+          }
+        },
+      ),
       ),
     );
   }

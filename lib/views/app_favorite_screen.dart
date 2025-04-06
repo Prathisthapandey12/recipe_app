@@ -19,7 +19,7 @@ class _AppFavoriteScreenState extends State<AppFavoriteScreen> {
     final favoriteItems = provider.favorites;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 200, 198, 198),
+        backgroundColor:  const Color.fromARGB(255, 12, 96, 15),
         centerTitle: true,
         title: Text('Favorites', style: TextStyle(fontWeight: FontWeight.bold),),
         automaticallyImplyLeading: false ,
