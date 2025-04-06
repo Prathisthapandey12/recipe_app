@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FavoriteProvider extends ChangeNotifier{
   List<String> _favoriteIds = [];
@@ -32,18 +33,45 @@ class FavoriteProvider extends ChangeNotifier{
   Future<void> _addfavorite(String productId) async{
     // add to favorite to firestore
     try{
-      await FirebaseFirestore.instance.collection('favorites').doc(productId).set({
-        'isFavorite' : true,
+
+      final prefs = await SharedPreferences.getInstance();
+      String? email = prefs.getString('email');
+      final querySnapshot = await FirebaseFirestore.instance
+      .collection('users')
+      .where('email', isEqualTo: email) // Match email field
+      .limit(1)
+      .get();
+      final userDoc = querySnapshot.docs.first;
+      await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userDoc.id)
+        .update({
+      'favorites': FieldValue.arrayUnion([productId])
       });
     }catch(e){
       print(e);
     }
+
   }
 
   Future<void> _removefavorite(String productId) async{
     // remove from favorite to firestore
     try{
-      await FirebaseFirestore.instance.collection('favorites').doc(productId).delete();
+      final prefs = await SharedPreferences.getInstance();
+      String? email = prefs.getString('email');
+      final querySnapshot = await FirebaseFirestore.instance
+      .collection('users')
+      .where('email', isEqualTo: email) // Match email field
+      .limit(1)
+      .get();
+      final userDoc = querySnapshot.docs.first;
+      await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userDoc.id)
+        .update({
+      'favorites': FieldValue.arrayRemove([productId])
+      });
+      
     }catch(e){
       print(e);
     }
@@ -51,8 +79,20 @@ class FavoriteProvider extends ChangeNotifier{
 
   Future<void> loadFavorites() async{
     try{
-      QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('favorites').get();
+      QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('users').get();
       _favoriteIds = snapshot.docs.map((e) => e.id).toList();
+
+      final prefs = await SharedPreferences.getInstance();
+      String? email = prefs.getString('email');
+      final querySnapshot = await FirebaseFirestore.instance
+      .collection('users')
+      .where('email', isEqualTo: email)
+      .limit(1)
+      .get();
+      final data = querySnapshot.docs.first.data();
+      final favorites = data['favorites'] ?? [];
+      _favoriteIds = List<String>.from(favorites);
+
     }catch(e){
       print(e);
     }

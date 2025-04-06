@@ -58,12 +58,8 @@ class _AppMainScreenState extends State<AppMainScreen>{
             icon: Icon(selectedindex==2 ? Icons.restaurant_menu : Icons.restaurant_menu_outlined),
             label: 'All Recipes'
           ),
-          BottomNavigationBarItem(
-            icon: Icon(selectedindex==3 ? Icons.settings : Icons.settings_outlined),
-            label: 'Settings'
-          ),
+          
         ],
-        
       ),
       body: page[selectedindex],
     );
