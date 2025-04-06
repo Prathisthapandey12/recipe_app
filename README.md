@@ -18,7 +18,7 @@ Users can browse delicious recipes, add their favorites, and securely log in/out
 - **Firestore Integration**  
   All recipes and user favorites are stored and retrieved from **Cloud Firestore**.
 
----
+
 
 ## Built With
 
@@ -27,7 +27,6 @@ Users can browse delicious recipes, add their favorites, and securely log in/out
 - [Cloud Firestore](https://firebase.google.com/products/firestore) – Stores recipes and favorites
 - [SharedPreferences](https://pub.dev/packages/shared_preferences) – Stores local user state
 
----
 
 ## Getting Started
 
@@ -52,8 +51,6 @@ flutter pub get
 ```bash
 flutter run
 ```
-
----
 
 ## Folder Structure
 
@@ -87,13 +84,10 @@ lib/
 - Add your own recipe
 - Comments or ratings
 
----
 
 ## Contributing
 
 Feel free to open an issue or submit a pull request. Contributions are welcome!
-
----
 
 
 ## Contact
