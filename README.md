@@ -30,23 +30,12 @@ Users can browse delicious recipes, add their favorites, and securely log in/out
 
 ---
 
-## Screenshots
-
-> _You can add screenshots here of your app UI_
-
-- Login Screen  
-- Recipe List  
-- Favorite Recipes  
-- Profile Page with Logout
-
----
-
 ## Getting Started
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/yourusername/recipe-app-flutter.git
-cd recipe-app-flutter
+git clone https://github.com/Prathisthapandey12/recipe_app
+cd recipe_app
 ```
 
 ### 2. Install dependencies
@@ -72,15 +61,22 @@ flutter run
 ```
 lib/
 ├── main.dart
-├── screens/
+├── provider/
+│   ├── favorite_provider.dart
+│   ├── quantity.dart
+├── views/
 │   ├── login_screen.dart
-│   ├── home_screen.dart
-│   └── profile_screen.dart
-├── services/
-│   ├── auth_service.dart
-│   └── firestore_service.dart
+│   ├── app_home_screen.dart
+|   ├── app_main_screen.dart
+|   ├── signin_screen.dart
+│   └── app_profile_screen.dart
+│   └── app_recipe_screen.dart
+|   ├── view_all.dart
 ├── widgets/
-│   └── recipe_card.dart
+│   └── banner.dart
+|   ├── food_items_display.dart
+|   ├── quantity_increment_decrement.dart
+|   ├── my_icon_button.dart
 ```
 
 ---
@@ -100,14 +96,9 @@ Feel free to open an issue or submit a pull request. Contributions are welcome!
 
 ---
 
-## License
-
-This project is open-source and available under the [MIT License](LICENSE).
-
----
 
 ## Contact
 
-Built by [Your Name]  
-GitHub: [@yourusername](https://github.com/yourusername)
+Built by Prathistha Pandey
+GitHub: [Prathisthapandey12](https://github.com/Prathisthapandey12)
 
